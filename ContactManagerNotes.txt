@@ -1,0 +1,22 @@
+Notes: ContactManager example
+http://code.msdn.microsoft.com/Contact-Manager-Web-API-0e8e373d
+
+----
+
+This isn't so much a tutorial as it is an example of a working WebAPI system. The code is available in whole at the link. The backend is very similar to that in the CRUD tutorial (with different data storage), but this example has a matching front end. A lot of the front end, login, and data stuff seems to be covered later in the tutorials, so I may come back here and make notes on that when I understand it better. For now, code of note:
+
+	    self.createContactFromForm = function (formElement) {
+                // If valid, post the serialized form data to the web api
+                $(formElement).validate();
+                if ($(formElement).valid()) {
+                    $.post("api/contacts", $(formElement).serialize(), "json")
+                        .done(function (newContact) { self.contacts.push(newContact); });
+                }
+            }
+            self.removeContact = function (contact) {
+                // First remove from the server, then from the UI
+                $.ajax({ type: "DELETE", url: contact.Self})
+                    .done(function () { self.contacts.remove(contact); });
+            }
+
+In particular, the first function sends serialized data, which was the main thing that seemed to be missing in the pevious tutorial.
